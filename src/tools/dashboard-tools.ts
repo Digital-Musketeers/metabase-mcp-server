@@ -243,7 +243,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
         .optional()
         .describe("Description of the dashboard"),
       parameters: z
-        .array(z.object({}).passthrough())
+        .array(z.record(z.string(), z.any()))
         .optional()
         .describe("Dashboard parameters array"),
       collection_id: z
@@ -407,9 +407,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
       col: z.number().optional().describe("Column position for the card"),
       size_x: z.number().optional().describe("Width of the card"),
       size_y: z.number().optional().describe("Height of the card"),
-      visualization_settings: z
-        .object({})
-        .passthrough()
+      visualization_settings: z.record(z.string(), z.any())
         .optional()
         .describe("Visualization settings (required for text cards)"),
       parameter_mappings: z
@@ -421,7 +419,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
         .optional()
         .describe("Parameter mappings for the card - connects dashboard filters to card fields"),
       series: z
-        .array(z.object({}).passthrough())
+        .array(z.record(z.string(), z.any()))
         .optional()
         .describe("Series data for the card"),
     }).strict(),
@@ -625,9 +623,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
       "Save a complete dashboard object with nested data - use this for bulk operations or complex dashboard structures",
     metadata: { isWrite: true },
     parameters: z.object({
-      dashboard: z
-        .object({})
-        .passthrough()
+      dashboard: z.record(z.string(), z.any())
         .describe("Dashboard object to save"),
     }).strict(),
     execute: async (args: { dashboard: any }) => {
@@ -662,9 +658,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
     metadata: { isWrite: true },
     parameters: z.object({
       parent_collection_id: z.number().describe("The parent collection ID"),
-      dashboard: z
-        .object({})
-        .passthrough()
+      dashboard: z.record(z.string(), z.any())
         .describe("Dashboard object to save"),
     }).strict(),
     execute: async (args: { parent_collection_id: number; dashboard: any }) => {
@@ -713,7 +707,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
         .optional()
         .describe("New description for the dashboard"),
       parameters: z
-        .array(z.object({}).passthrough())
+        .array(z.record(z.string(), z.any()))
         .optional()
         .describe("Dashboard parameters"),
       points_of_interest: z.string().optional().describe("Points of interest"),
@@ -738,9 +732,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
         .optional()
         .describe("Collection ID to move dashboard to"),
       caveats: z.string().optional().describe("Dashboard caveats"),
-      embedding_params: z
-        .object({})
-        .passthrough()
+      embedding_params: z.record(z.string(), z.any())
         .optional()
         .describe("Embedding parameters"),
       position: z.number().optional().describe("Dashboard position"),
@@ -797,7 +789,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
               row: z.number().optional().describe("Row position"),
               col: z.number().optional().describe("Column position"),
               series: z
-                .array(z.object({}).passthrough())
+                .array(z.record(z.string(), z.any()))
                 .optional()
                 .describe("Series data"),
             })
@@ -1096,7 +1088,7 @@ export function addDashboardTools(server: any, metabaseClient: MetabaseClient) {
           card_id: z.number().describe("The card ID this mapping applies to"),
           target: z.array(z.unknown()).describe("Target specification - e.g. ['dimension', ['field', field_id, {...}]] or ['variable', ['template-tag', name]]"),
         }).passthrough()).optional().describe("Parameter mappings for connecting filters"),
-        visualization_settings: z.object({}).passthrough().optional().describe("Visualization settings"),
+        visualization_settings: z.record(z.string(), z.any()).optional().describe("Visualization settings"),
         row: z.number().optional().describe("Row position"),
         col: z.number().optional().describe("Column position"),
         size_x: z.number().optional().describe("Width of the card"),
